@@ -2,7 +2,8 @@ import random
 import math
 
 def wrap_svg(content, width=200, height=200):
-    return f'<svg viewBox="0 0 {width} {height}" width="{width}" height="{height}" xmlns="http://www.w3.org/2000/svg">{content}</svg>'
+    svg = f'<svg viewBox="0 0 {width} {height}" width="{width}" height="{height}" xmlns="http://www.w3.org/2000/svg">{content}</svg>'
+    return svg.replace('\n', '')
 
 def get_polygon_svg(sides, cx, cy, r, rotation=0, fill="none", stroke="black", stroke_width=2):
     pts = []
@@ -126,32 +127,32 @@ def generate_superposition(packet_seed):
     random.seed(packet_seed)
     
     # Base: circle
-    base = '<circle cx="100" cy="100" r="50" fill="none" stroke="black" stroke-width="2"/>'
+    base = '<circle cx="100" cy="100" r="30" fill="none" stroke="black" stroke-width="2"/>'
     
     # Feature 1
     f1 = random.choice([
-        '<line x1="50" y1="100" x2="150" y2="100" stroke="black" stroke-width="2"/>',
-        '<line x1="100" y1="50" x2="100" y2="150" stroke="black" stroke-width="2"/>'
+        '<line x1="70" y1="100" x2="130" y2="100" stroke="black" stroke-width="2"/>',
+        '<line x1="100" y1="70" x2="100" y2="130" stroke="black" stroke-width="2"/>'
     ])
     
     # Feature 2
     f2 = random.choice([
-        '<rect x="80" y="80" width="40" height="40" fill="none" stroke="black" stroke-width="2"/>',
-        '<circle cx="100" cy="100" r="20" fill="none" stroke="black" stroke-width="2"/>'
+        '<rect x="85" y="85" width="30" height="30" fill="none" stroke="black" stroke-width="2"/>',
+        '<circle cx="100" cy="100" r="15" fill="none" stroke="black" stroke-width="2"/>'
     ])
 
     q_svg = wrap_svg(f"""
-        <g transform="translate(-100, 0)">
+        <g transform="translate(-60, 0)">
             {base}
             {f1}
         </g>
-        <text x="70" y="105" font-size="24">+</text>
-        <g transform="translate(0, 0)">
+        <text x="80" y="105" font-size="24">+</text>
+        <g transform="translate(30, 0)">
             {base}
             {f2}
         </g>
         <text x="170" y="105" font-size="24">=</text>
-        <text x="210" y="105" font-size="24">?</text>
+        <text x="200" y="105" font-size="24">?</text>
     """, width=240, height=200)
 
     options = []
