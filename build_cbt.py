@@ -1,6 +1,7 @@
 import json
 import re
 import os
+import svg_generator
 
 def build():
     # 1. Extract Packet 1 from original HTML
@@ -28,6 +29,15 @@ def build():
     except Exception as e:
         print("Error decoding Packet 1:", e)
         return
+
+    # Replace packet 1 bonus questions
+    packet1_spatial = svg_generator.get_spatial_questions(1)
+    sp_idx = 0
+    for q in packet1:
+        if 25 <= q['id'] <= 30:
+            q.update(packet1_spatial[sp_idx])
+            q['id'] = 25 + sp_idx # ensure ID is correct
+            sp_idx += 1
 
     # 2. Define Packet 2 (Questions 101 - 200)
     packet2 = []
@@ -242,14 +252,10 @@ def build():
     ])
 
     # Q125 - Q130: Bonus
-    for i in range(125, 131):
-        packet2.append({
-            "id": i,
-            "text": "Soal ini merupakan bonus (materi soal asli pada PDF berupa gambar/tabel yang tidak dapat terbaca).",
-            "options": ["BONUS (Jawaban Benar)"],
-            "correctIndex": 0,
-            "explanation": "Soal ini dianulir / merupakan bonus dari sistem."
-        })
+    packet2_spatial = svg_generator.get_spatial_questions(2)
+    for i, q in enumerate(packet2_spatial):
+        q["id"] = 125 + i
+        packet2.append(q)
 
     # Q131 - Q141: Sinonim
     packet2.extend([
@@ -1074,14 +1080,10 @@ def build():
     ])
 
     # Q225 - Q230: Bonus
-    for i in range(225, 231):
-        packet3.append({
-            "id": i,
-            "text": "Soal ini merupakan bonus (materi soal asli pada PDF berupa gambar/tabel yang tidak dapat terbaca).",
-            "options": ["BONUS (Jawaban Benar)"],
-            "correctIndex": 0,
-            "explanation": "Soal ini dianulir / merupakan bonus dari sistem."
-        })
+    packet3_spatial = svg_generator.get_spatial_questions(3)
+    for i, q in enumerate(packet3_spatial):
+        q["id"] = 225 + i
+        packet3.append(q)
 
     # Q231 - Q241: Sinonim
     packet3.extend([
@@ -1912,14 +1914,10 @@ def build():
     ])
 
     # Q325 - Q330: Bonus
-    for i in range(325, 331):
-        packet4.append({
-            "id": i,
-            "text": "Soal ini merupakan bonus (materi soal asli pada PDF berupa gambar/tabel yang tidak dapat terbaca).",
-            "options": ["BONUS (Jawaban Benar)"],
-            "correctIndex": 0,
-            "explanation": "Soal ini dianulir / merupakan bonus dari sistem."
-        })
+    packet4_spatial = svg_generator.get_spatial_questions(4)
+    for i, q in enumerate(packet4_spatial):
+        q["id"] = 325 + i
+        packet4.append(q)
 
     # Q331 - Q341: Sinonim
     packet4.extend([
